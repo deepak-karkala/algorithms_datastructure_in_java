@@ -51,6 +51,15 @@ public class SinglyLinkedList {
 		return list;
 	}
 	
+	//Method to delete node by key
+	public static SinglyLinkedList deleteByKey(SinglyLinkedList list, int key)
+	{
+		Node currentNode = list.head;
+		Node prevNode = null;
+		
+		return list;
+	}
+	
 	// Driver code
 	public static void main(String[] args) {
 		SinglyLinkedList slist = new SinglyLinkedList();
