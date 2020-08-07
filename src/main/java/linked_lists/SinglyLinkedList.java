@@ -57,6 +57,11 @@ public class SinglyLinkedList {
 		Node currentNode = list.head;
 		Node prevNode = null;
 		
+		// If the node to be deleted is head itself
+		if (currentNode != null && currentNode.data == key) {
+			list.head = currentNode.next;
+			return list;
+		}
 		return list;
 	}
 	
