@@ -22,7 +22,6 @@ public class SinglyLinkedList {
 	public static void printList(SinglyLinkedList list)
 	{
 		Node currentNode = list.head;
-		
 		while (currentNode != null) {
 			System.out.print(currentNode.data + "->");
 			currentNode = currentNode.next;
