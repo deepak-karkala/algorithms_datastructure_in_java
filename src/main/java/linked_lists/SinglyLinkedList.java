@@ -50,7 +50,13 @@ public class SinglyLinkedList {
 		return list;
 	}
 	
-	//Method to delete node by key
+	/*
+	 * Method to delete node by key
+	 * 
+	 * @param: 	list: Linked list
+	 * 			key: Key where node is to be deleted
+	 * @return: list: Linked list with node with key deleted
+	 */
 	public static SinglyLinkedList deleteByKey(SinglyLinkedList list, int key)
 	{
 		Node currentNode = list.head;
@@ -61,6 +67,21 @@ public class SinglyLinkedList {
 			list.head = currentNode.next;
 			return list;
 		}
+		
+		// If key is present somewhere other than at head
+		while (currentNode != null && currentNode.data != key) {
+			prevNode = currentNode;
+			currentNode = currentNode.next;
+		}
+		if (currentNode != null) {
+			prevNode.next = currentNode.next;
+		}
+		
+		// If key is not present
+		if (currentNode == null) {
+			
+		}
+
 		return list;
 	}
 	
