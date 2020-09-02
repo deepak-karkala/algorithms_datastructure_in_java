@@ -1,5 +1,6 @@
 package heaps;
 
+import java.util.EmptyStackException;
 /**
  * <code>MinHeap</code> implements Minimum Heap data-structure
  * supports following, <code>minHeapify</code>, <code>buildMinHeap</code>,
@@ -22,13 +23,6 @@ public class MinHeap {
 		this.maxSize = maxSize;
 		heapSize = 0;
 		heap = new int[this.maxSize];
-	}
-	
-	/*
-	 * Constructor, builds min heap given an array
-	 */
-	public MinHeap(int[] arr) {
-		
 	}
 
 	/*
@@ -101,6 +95,63 @@ public class MinHeap {
 		while (pos >= 0) {
 			minHeapify(pos--);
 		}
+	}
+	
+	
+	/*
+	 * Heapsort algorithm
+	 */
+	private void sortHeap() {
+		int temp = heapSize;
+		buildMinHeap();
+		while(heapSize >= 0) {
+			swap(0, heapSize);
+			heapSize--;
+			minHeapify(0);
+		}
+		heapSize = temp;
+	}
+	
+	/*
+	 * Return minimum
+	 */
+	private int getMin() {
+		return heap[0];
+	}
+	
+	/*
+	 * Extract minimum, return and remove minimum from heap
+	 */
+	private int extractMin() {
+		if (heapSize < 1) {
+			throw new EmptyStackException();
+		}
+		int min = getMin();
+		swap(0, heapSize-1);
+		heapSize--;
+		minHeapify(0);
+		return min;
+	}
+	
+	/*
+	 * Insert new element 
+	 */
+	private void insert(int key) {
+		heapSize++;
+		heap[heapSize-1] = key;
+		int i = heapSize-1;
+		int iParent = getParent(i);
+		while ((i>0) && (heap[iParent] > heap[i])) {
+			swap(i, iParent);
+			i = iParent;
+			iParent = getParent(i);
+		}
+	}
+	
+
+	public static void main(String[] args) {
+		int[] arr = {16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
+		
 	}
 	
 }
