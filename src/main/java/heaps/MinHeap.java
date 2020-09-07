@@ -1,5 +1,6 @@
 package heaps;
 
+import java.util.Arrays;
 import java.util.EmptyStackException;
 /**
  * <code>MinHeap</code> implements Minimum Heap data-structure
@@ -12,9 +13,9 @@ import java.util.EmptyStackException;
 
 
 public class MinHeap {
-	private int[] heap;
-	private int heapSize;
-	private int maxSize;
+	int[] heap;
+	int heapSize;
+	int maxSize;
 	
 	/*
 	 * Constructor, creates empty heap
@@ -49,7 +50,9 @@ public class MinHeap {
 	/*
 	 * Swap two elements in heap
 	 */
-	private void swap(int pos1, int pos2) {
+	public void swap(int pos1, int pos2) {
+		pos1--;
+		pos2--;
 		int temp = heap[pos2];
 		heap[pos2] = heap[pos1];
 		heap[pos1] = temp;
@@ -58,7 +61,7 @@ public class MinHeap {
 	/*
 	 * Check if node is a leaf
 	 */
-	private boolean isLeaf(int pos) {
+	public boolean isLeaf(int pos) {
 		if ((pos >= Math.floorDiv(heapSize, 2)+1) && (pos <= heapSize)) {
 			return true;
 		}
@@ -68,16 +71,18 @@ public class MinHeap {
 	/*
 	 * Swaps elements to create min heap at given node
 	 */
-	private void minHeapify(int pos) {
+	public void minHeapify(int pos) {
 		int left = getLeftChild(pos);
 		int right = getRightChild(pos);
 		int smallest = pos;
 		
-		if ((left < heapSize) && (heap[left] < heap[pos])) {
+		
+		//System.out.println(left);
+		if ((left <= heapSize) && (heap[left-1] < heap[pos-1])) {
 			smallest = left;
 		}
 		
-		if ((right < heapSize) && (heap[right] < heap[smallest])) {
+		if ((right <= heapSize) && (heap[right-1] < heap[smallest-1])) {
 			smallest = right;
 		}
 		
@@ -90,9 +95,9 @@ public class MinHeap {
 	/*
 	 * Build min heap
 	 */
-	private void buildMinHeap() {
+	public void buildMinHeap() {
 		int pos = Math.floorDiv(heapSize, 2);
-		while (pos >= 0) {
+		while (pos >= 1) {
 			minHeapify(pos--);
 		}
 	}
@@ -101,47 +106,48 @@ public class MinHeap {
 	/*
 	 * Heapsort algorithm
 	 */
-	private void sortHeap() {
+	public void sortHeap() {
 		int temp = heapSize;
 		buildMinHeap();
-		while(heapSize >= 0) {
-			swap(0, heapSize);
+		while(heapSize >= 2) {
+			swap(1, heapSize);
 			heapSize--;
-			minHeapify(0);
+			minHeapify(1);
 		}
 		heapSize = temp;
+		
 	}
 	
 	/*
 	 * Return minimum
 	 */
-	private int getMin() {
+	public int getMin() {
 		return heap[0];
 	}
 	
 	/*
 	 * Extract minimum, return and remove minimum from heap
 	 */
-	private int extractMin() {
+	public int extractMin() {
 		if (heapSize < 1) {
 			throw new EmptyStackException();
 		}
 		int min = getMin();
-		swap(0, heapSize-1);
+		swap(1, heapSize);
 		heapSize--;
-		minHeapify(0);
+		minHeapify(1);
 		return min;
 	}
 	
 	/*
 	 * Insert new element 
 	 */
-	private void insert(int key) {
+	public void insert(int key) {
 		heapSize++;
 		heap[heapSize-1] = key;
-		int i = heapSize-1;
+		int i = heapSize;
 		int iParent = getParent(i);
-		while ((i>0) && (heap[iParent] > heap[i])) {
+		while ((i>1) && (heap[iParent] > heap[i])) {
 			swap(i, iParent);
 			i = iParent;
 			iParent = getParent(i);
