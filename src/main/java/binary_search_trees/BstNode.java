@@ -8,5 +8,12 @@ package binary_search_trees;
 
 public class BstNode {
 	int key;
-	BstNode left, right;
+	BstNode left, right, parent;
+	
+	BstNode(int key) {
+		this.key = key;
+		left = null;
+		right = null;
+		parent = null;
+	}
 }
