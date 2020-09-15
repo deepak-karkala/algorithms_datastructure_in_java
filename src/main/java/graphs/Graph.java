@@ -65,7 +65,7 @@ public class Graph {
 	Graph(int numVertices) {
 		this.numVertices = numVertices;
 		V = new Vertex[numVertices];
-		//adj = new LinkedList[numVertices];
+		adj = new LinkedList[numVertices];
 
 		for (int i=0; i<numVertices; i++) {	
 			V[i] = new Vertex(i);
@@ -92,12 +92,13 @@ public class Graph {
 		
 		while (queue.size() != 0) {
 			int u = queue.poll();
-			
+			System.out.print(u + "-");
+
 			//Visit all vertices in adjacency list of u
 			Iterator<Integer> itr = adj[u].listIterator();
 			while(itr.hasNext()) {
 				int v = itr.next();
-				
+					
 				if (!visited[v]) {
 					// Mark as visited and add to queue
 					visited[v] = true;
@@ -112,16 +113,50 @@ public class Graph {
 		
 	}
 	
+	/*
+	 * Shortest path between two vertices using Breadth first tree
+	 * Should be invoked after Breadth first tree is built
+	 * 
+	 * @param	s	start vertex
+	 * 			v	End vertex	
+	 */
+	public void findShortestPath(int s, int v) {
+		if (s == v) {
+			System.out.print(v+"-");
+		} else if (V[v].getPredecessor() == null) { 
+			return;
+		} else {
+			findShortestPath(s, V[v].getPredecessor().getId());
+			System.out.print(v+"-");
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		Graph g = new Graph(8);
 		g.addEdge(0, 1);
 		g.addEdge(0, 2);
+		g.addEdge(1, 0);
+		g.addEdge(2, 0);
 		g.addEdge(2, 3);
+		g.addEdge(3, 2);
 		g.addEdge(3, 4);
 		g.addEdge(3, 5);
+		g.addEdge(4, 3);
 		g.addEdge(4, 5);
 		g.addEdge(4, 6);
-		g.addEdge();
+		g.addEdge(5, 3);
+		g.addEdge(5, 4);
+		g.addEdge(5, 6);
+		g.addEdge(5, 7);
+		g.addEdge(6, 4);
+		g.addEdge(6, 5);
+		g.addEdge(6, 7);
+		g.addEdge(7, 5);
+		g.addEdge(7, 6);
+		g.BreadthFirstSearch(2);
 		
+		System.out.println("");
+		g.findShortestPath(2, 7);
 	}
 }
