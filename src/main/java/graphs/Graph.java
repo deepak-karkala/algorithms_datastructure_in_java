@@ -13,12 +13,16 @@ class Vertex {
 	private boolean visited;
 	private Vertex predecessor;
 	private int distance;
+	private int startTime;
+	private int finishTime;
 	
 	Vertex(int id) {
 		this.id = id;
 		this.visited = false;
 		this.predecessor = null;
 		this.distance = Integer.MAX_VALUE;
+		this.startTime = 0;
+		this.finishTime = 0;
 	}
 	
 	public int getId() {
@@ -54,14 +58,30 @@ class Vertex {
 		this.predecessor = predecessor;
 		this.distance = distance;
 	}
+	
+	public void clearAttributes() {
+		this.visited = false;
+		this.predecessor = null;
+		this.distance = Integer.MAX_VALUE;
+	}
+	
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+	
+	public void setFinishTime(int finishTime) {
+		this.finishTime = finishTime;
+	}
 }
+
 
 
 public class Graph {
 	private Vertex[] V;
 	private int numVertices;
 	private LinkedList<Integer> adj[];
-	
+	public static int time = 0;
+
 	Graph(int numVertices) {
 		this.numVertices = numVertices;
 		V = new Vertex[numVertices];
@@ -78,6 +98,11 @@ public class Graph {
 	}
 	
 	public void BreadthFirstSearch(int s) {
+		// Clear attributes of all vertices
+		for(Vertex u: V) {
+			u.clearAttributes();
+		}
+
 		// Boolean array to track which vertices are visited
 		boolean[] visited = new boolean[numVertices];
 		visited[s] = true;
@@ -131,6 +156,41 @@ public class Graph {
 		}
 	}
 	
+	/*
+	 * Depth first search
+	 */
+	public void depthFirstSearch() {
+		// Clear attributes of all vertices
+		for(Vertex u: V) {
+			u.clearAttributes();
+		}
+		Graph.time = 0;
+		for(Vertex u: V) {
+			if (!u.isVisited()) {
+				depthFirstSearchVisit(u.getId());
+			}
+		}
+	}
+
+	
+	public void depthFirstSearchVisit(int u) {
+		Graph.time += 1;
+		V[u].setStartTime(Graph.time);
+		V[u].setVisited(true);
+		System.out.print(" (" + u + " ");
+
+		Iterator<Integer> itr = adj[u].listIterator();
+		while (itr.hasNext()) {
+			int v = itr.next();
+			if (!V[v].isVisited()) {
+				V[v].setPredecessor(V[u]);
+				depthFirstSearchVisit(v);
+			}
+		}
+		Graph.time += 1;
+		V[u].setFinishTime(Graph.time);
+		System.out.print(u + ")" + " ");
+	}
 	
 	public static void main(String[] args) {
 		Graph g = new Graph(8);
@@ -158,5 +218,8 @@ public class Graph {
 		
 		System.out.println("");
 		g.findShortestPath(2, 7);
+		
+		System.out.println("");
+		g.depthFirstSearch();
 	}
 }
