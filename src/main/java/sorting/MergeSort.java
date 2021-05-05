@@ -56,9 +56,7 @@ public class MergeSort {
 	public static void main(String[] args) {
 		String[] array = {"d", "z", "t", "f", "a", "g", "m"};
 		String[] result = mergeSortGeneric(array);
-
 		System.out.println(Arrays.toString(result));
-		
 	}
 	
 	
