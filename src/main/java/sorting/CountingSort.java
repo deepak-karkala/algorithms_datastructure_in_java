@@ -36,8 +36,10 @@ public class CountingSort {
 	
 	
 	public static void main(String[] args) {
-		List<Integer> intList = Stream.of(5, 9, 3, 1, 4, 7, 2, 8, 6).collect(toList());
-		List<Integer> sortedList = countingSort(intList);
+		List<Integer> intList = Stream.of(-5, 9, 3, 1, 4, 7, 2, 8, 6).collect(toList());
+		
+		List<String> charList = Stream.of("v", "d", "d", "j", "i", "o", "t", "a").collect(toList());
+		List<String> sortedList = countingSort(charList);
 		System.out.println(Arrays.toString(sortedList.toArray()));
 	}
 }
